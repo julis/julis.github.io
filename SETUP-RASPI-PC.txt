@@ -1,0 +1,57 @@
+steps for installing on new raspi
+- install mono
+-- sudo apt-get update
+-- sudo apt-get install mono-runtime
+-- sudo apt-get install libmono-system-core4.0-cil 
+- or use
+-- sudo apt-get install mono-complete
+
+- install libtermioswrapper
+-- pastikan dapat versi terakhir dari gitlab
+-- run compile.sh in Formulatrix.Core\Formulatrix.Core.Protocol.Serial.Linux\Library
+--- if faile just run 
+---- gcc -Wall -fPIC -c termioswrapper.c -o termioswrapper.o
+---- gcc -Wall -shared -o libtermioswrapper.so termioswrapper.o
+---- sudo cp libtermioswrapper.so /usr/lib
+
+- turn of bluetooth
+-- add these line to /boot/config.txt
+-- dtoverlay=pi3-disable-bt
+
+- hilangkan console=ttyAMA0
+- edit /boot/cmdline.txt 
+-- hilangkan console=ttyAMA0
+
+- autostart browser ketika lightdm start
+-- edit ~/.config/lxsession/LXDE/autostart
+-- tambahkan: @sh /home/pi/startup-local.sh
+-- isi file /home/pi/startup-local.sh
+--- #!/bin/sh
+--- epiphany --display=:0 http://google.com atau 
+--- chromium-browser  http://localhost:9000
+-- chmod 755 startup-local.sh 
+-- atau chmod +x startup-local.sh
+
+- autostart Protein Concentrator backend program
+-- sudo nano /etc/rc.local
+-- tambahkan sebelum exit ( pastikan sudah terinstall screen di linux: sudo apt-get install screen)
+-- screen -dm -S pc-backend /home/pi/start-server.sh
+* note: itu dijalankan sebagai user root jika ingin dijalankan sebagai user pi
+-- 
+# Run a command as `pi` from the home folder 
+# in a screen named `pc-backend`
+su - pi -c "screen -dm -S pc-backend ~/start-server.sh"
+--
+-- buat file di home/pi/
+-- nano /home/pi/start-server.sh
+-- isi dengan line berikut 
+
+#!/bin/sh
+cd /home/pi/ProteinConcentrator/PC.Server/bin/Debug/
+mono PC.Server.exe
+
+-- sudo chmod +x /home/pi/start-server.sh
+
+raspi
+check what the distro is
+cat /etc/*-release

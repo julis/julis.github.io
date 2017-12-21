@@ -1,0 +1,18 @@
+# Change Raspberry pi name :
+```
+sudo nano /etc/hosts
+```
+
+change raspberrypi to proteinconcentrator
+save
+```
+sudo nano /etc/hostname
+```
+change raspberrypi to proteinconcentrator
+save
+```
+sudo /etc/init.d/hostname.sh
+```
+```
+sudo reboot
+```

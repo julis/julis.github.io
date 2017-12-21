@@ -1,0 +1,12 @@
+# turn off virtual terminal switching
+# ctrl+alt+f1...f12
+
+```
+sudo nano /etc/X11/xorg.conf
+```
+add the following lines
+```
+Section "ServerFlags"
+    Option "DontVTSwitch" "true"
+EndSection
+```

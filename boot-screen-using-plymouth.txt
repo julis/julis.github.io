@@ -1,0 +1,35 @@
+boot screen using plymouth
+# disable asplashscreen
+first make a backup of script 
+```
+cp /etc/init.d/asplashscreen .
+```
+disable the service asplashscreen
+```
+sudo update-rc.d asplashscreen disable
+```
+## change the /boot/cmdline.txt
+remove 
+```
+plymouth.enable=0
+```
+make sure this is added to line
+```
+quiet splash plymouth.ignore-serial-consoles
+```
+## check is there any themes already installed on system
+```
+cd /usr/share/plymouth/themes
+```
+or you can use 
+```
+plymouth-set-default-theme --list
+```
+## set default themes
+```
+sudo plymouth-set-default-theme spacefun
+```
+after change themes execute update initramfs
+```
+sudo update-initramfs -u
+```

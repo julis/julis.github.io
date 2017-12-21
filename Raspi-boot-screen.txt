@@ -1,0 +1,68 @@
+raspberry jessie custom boot screen
+- hilangkan tulisan dan logo ketika booting
+edit /boot/cmdline.txt
+katanya tambahkan 
+vt.global_cursor_default=0 logo.nologo console=tty3 plymouth.enable=0 quiet
+pengalaman ku cukup rubah 
+console=tty0 menjadi console=tty3
+lalu tambahkan 
+logo.nologo plymouth.enable=0 quiet
+- install fbi
+sudo apt-get install fbi
+- bikin gambar splash.png
+ukuran 1024x600 (sesuaikan resolusi layar)
+sudo cp splash.png /etc/
+- bikin script
+- sudo nano /etc/init.d/asplashscreen
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          asplashscreen
+# Required-Start:
+# Required-Stop:
+# Should-Start:      
+# Default-Start:     S
+# Default-Stop:
+# Short-Description: Show custom splashscreen
+# Description:       Show custom splashscreen
+### END INIT INFO
+
+
+do_start () {
+
+    /usr/bin/fbi -T 1 -noverbose -a /etc/splash.png    
+    exit 0
+}
+
+case "$1" in
+  start|"")
+    do_start
+    ;;
+  restart|reload|force-reload)
+    echo "Error: argument '$1' not supported" >&2
+    exit 3
+    ;;
+  stop)
+    # No-op
+    ;;
+  status)
+    exit 0
+    ;;
+  *)
+    echo "Usage: asplashscreen [start|stop]" >&2
+    exit 3
+    ;;
+esac
+
+:
+
+- buat script tersebut executable
+sudo chmod a+x /etc/init.d/asplashscreen
+- install scriptnya sebagai servic
+sudo insserv /etc/init.d/asplashscreen
+
+referensi :
+https://raspberrypi.stackexchange.com/questions/1214/how-to-add-custom-loading-screen
+sepertinya lebih bagus pakai metode ini
+- plymouth
+- https://yingtongli.me/blog/2016/12/21/splash.html
+- http://blog.fraggod.net/2015/11/28/raspberry-pi-early-boot-splash-logo-screen.html

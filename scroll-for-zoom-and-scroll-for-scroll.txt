@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div>
+<div id="myDIV">
+<h2 onclick="showCoords(event)">Click this heading to get the x (horizontal) and y (vertical) coordinates of the mouse pointer when it was clicked.</h2>
+
+<p><strong>Tip:</strong> Try to click different places in the heading.</p>
+
+<p id="demo"></p>
+</div>
+<div id="myDIV2">
+<h2 onclick="showCoords(event)">Click this heading to get the x (horizontal) and y (vertical) coordinates of the mouse pointer when it was clicked.</h2>
+
+<p><strong>Tip:</strong> Try to click different places in the heading.</p>
+
+<p id="demo2"></p>
+</div>
+<pre>
+document.getElementById("myDIV").addEventListener("wheel", myFunction);
+document.getElementById("myDIV2").addEventListener("wheel", myFunction2);
+function myFunction() {
+    var x = event.clientX;
+    var y = event.clientY;
+    var coords = "X coords: " + x + ", Y coords: " + y;
+    document.getElementById("demo").innerHTML = coords;
+}
+function myFunction2() {
+    var x = event.clientX;
+    var y = event.clientY;
+    var coords = "X coords: " + x + ", Y coords: " + y;
+    document.getElementById("demo2").innerHTML = coords;
+}
+function showCoords(event) {
+    var x = event.clientX;
+    var y = event.clientY;
+    var coords = "X coords: " + x + ", Y coords: " + y;
+    document.getElementById("demo").innerHTML = coords;
+}
+</pre>
+</div>
+<script>
+document.getElementById("myDIV").addEventListener("wheel", myFunction);
+document.getElementById("myDIV2").addEventListener("wheel", myFunction2);
+function myFunction() {
+    var x = event.clientX;
+    var y = event.clientY;
+    var coords = "X coords: " + x + ", Y coords: " + y;
+    document.getElementById("demo").innerHTML = coords;
+}
+function myFunction2() {
+    var x = event.clientX;
+    var y = event.clientY;
+    var coords = "X coords: " + x + ", Y coords: " + y;
+    document.getElementById("demo2").innerHTML = coords;
+}
+function showCoords(event) {
+    var x = event.clientX;
+    var y = event.clientY;
+    var coords = "X coords: " + x + ", Y coords: " + y;
+    document.getElementById("demo").innerHTML = coords;
+}
+</script>
+
+</body>
+</html>

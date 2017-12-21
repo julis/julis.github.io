@@ -1,0 +1,62 @@
+## setup pc-backend sebagai service
+- pastikan dalam main programnya tidak ada yg membaca console.readline sebagai tanda untuk exit
+- lebih baik gunakan class ServiceBase atau bisa juga menggunakan cara berikut :
+	- tambahkan reference ke Mono.Posix ( gunakan nuget )
+	- tambahkan directive berikut :
+	```
+	using Mono.Unix;
+	using Mono.Unix.Native;
+	```
+	- lalu gunakan snippet berikut :
+	```
+	if (Type.GetType("Mono.Runtime") != null)
+	{
+		// on mono, processes will usually run as daemons - this allows you to listen
+		// for termination signals (ctrl+c, shutdown, etc) and finalize correctly
+		UnixSignal.WaitAny(new[] {
+		new UnixSignal(Signum.SIGINT),
+		new UnixSignal(Signum.SIGTERM),
+		new UnixSignal(Signum.SIGQUIT),
+		new UnixSignal(Signum.SIGHUP)
+		});
+	}
+	else
+	{
+		Console.ReadLine();
+	}
+	// do something when we exit from application
+	```
+- buat file /lib/systemd/system/pc-backend.service
+```
+[Unit]
+Description=Protein Concentrator Service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/ProteinConcentrator/PC.Server/bin/Debug
+ExecStart=/usr/bin/mono /home/pi/ProteinConcentrator/PC.Server/bin/Debug/PC.Server.exe -d dummy
+
+[Install]
+WantedBy=multi-user.target
+```
+- reload daemon
+```
+$ sudo systemctl daemon-reload
+```
+- aktifkan service ini
+```
+$ sudo systemctl enable pc-backend.service
+```
+- test start servicenya
+```
+$ sudo systemctl start pc-backend.service
+```
+- test status servicenya
+```
+$ sudo systemctl status pc-backend.service
+```
+- test stop servicenya
+```
+$ sudo systemctl stop pc-backend.service
+```
+- reboot dan service akan otomatis up

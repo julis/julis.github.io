@@ -1,0 +1,15 @@
+Enable full screen and remove the black border when xinit chromium-browser
+create file start-browser.sh in your home directory with content:
+```
+#!/bin/sh
+xset s off
+xset -dpms
+/usr/bin/chromium-browser --window-position=0,0 --window-size="1024,600" --display=:0 --app=http://localhost:9000 --start-fullscreen --kiosk --no-sandbox &
+unclutter -idle 0.1
+```
+
+edit file /etc/rc.local
+add this line before "exit 0"
+```
+xinit ./home/pi/start-browser.sh
+```

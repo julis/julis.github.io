@@ -1,0 +1,12 @@
+[Unit]
+Description=Protein Concentrator Service
+Requires=pc-backend-extractor.service
+After=pc-backend-extractor.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/ProteinConcentrator/apps/PC.Server/bin/
+ExecStart=/bin/sh /home/pi/start-server.sh
+
+[Install]
+WantedBy=multi-user.target

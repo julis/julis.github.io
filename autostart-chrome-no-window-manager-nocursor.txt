@@ -1,0 +1,25 @@
+#autostart chrome no window manager nocursor
+#install unclutter
+```
+sudo apt-get install unclutter
+```
+#create file /home/pi/start-browser.sh
+```
+#!/bin/sh
+
+#epiphany --display=:0 http://google.com
+#mono /home/pi/ProteinConcentrator/PC.Server/bin/Debug/PC.Server.exe
+
+#matchbox-window-manager &
+/usr/bin/chromium-browser --display=:0 --app=http://localhost:9000 --start-fullscreen --kiosk --no-sandbox &
+unclutter -idle 0.1
+```
+set this file as executable 
+```
+chmod +x start-browser.sh
+```
+#edit file /etc/rc.local
+add this line before exit 0
+```
+xinit ./home/pi/start-browser.sh
+```

@@ -1,0 +1,10 @@
+[Unit]
+Description=Protein Concentrator App Extractor
+
+[Service]
+Type=oneshot
+ExecStartPre=-/bin/rm -rf /dev/shm/PC.Server/
+ExecStart=/bin/tar -xzvf /home/pi/ProteinConcentrator/apps/PC.Server.0.3.tar.gz -C /dev/shm
+
+[Install]
+WantedBy=multi-user.target

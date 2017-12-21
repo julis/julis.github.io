@@ -1,0 +1,12 @@
+[Unit]
+Description=Protein Concentrator Service
+
+[Service]
+Type=simple
+ExecStartPre=-/bin/rm -rf /dev/shm/PC.Server/
+ExecStartPre=/bin/tar -xzvf /home/pi/ProteinConcentrator/apps/PC.Server.0.3.tar.gz -C /dev/shm
+WorkingDirectory=/dev/shm
+ExecStart=/usr/bin/mono /dev/shm/PC.Server/bin/PC.Server.exe -d dummy
+
+[Install]
+WantedBy=multi-user.target

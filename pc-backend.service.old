@@ -1,0 +1,12 @@
+[Unit]
+Description=Protein Concentrator Service
+Requires=pc-backend-extractor.service
+After=pc-backend-extractor.service
+
+[Service]
+Type=simple
+WorkingDirectory=/dev/shm/PC.Server/bin
+ExecStart=/usr/bin/mono /dev/shm/PC.Server/bin/PC.Server.exe -d dummy
+
+[Install]
+WantedBy=multi-user.target
